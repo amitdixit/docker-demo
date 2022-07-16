@@ -1,4 +1,4 @@
-namespace WebApplication2.Models;
+namespace k8s_pgsql_crud.Models;
 
 public class ErrorViewModel
 {

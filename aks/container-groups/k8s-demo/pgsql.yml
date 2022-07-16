@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mypgsql
+spec:
+  ports:
+  - port: 5432
+  selector:
+    app: mypgsql
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mypgsql
+spec:
+  selector:
+    matchLabels:
+      app: mypgsql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mypgsql
+    spec:
+      containers:
+      - image: akddemoacr.azurecr.io/pgsqlcustom:latest
+        name: mypgsql
+        ports:
+        - containerPort: 5432
+          name: mypgsql

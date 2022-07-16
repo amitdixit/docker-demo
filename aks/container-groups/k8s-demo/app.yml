@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: appservice
+spec:
+  selector:
+    app: mycrudapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mycrudapp
+spec:
+  selector:
+    matchLabels:
+      app: mycrudapp
+  template:
+    metadata:
+      labels:
+        app: mycrudapp
+    spec:
+      containers:
+      - image: akddemoacr.azurecr.io/k8s-crud-app:latest
+        name: mycrudapp
+        ports:
+        - containerPort: 80
+          name: mycrudapp        
