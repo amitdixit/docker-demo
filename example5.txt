@@ -5,12 +5,17 @@ docker build . -t theamitdixit/pgsqlcustom:acrdemo
 docker push theamitdixit/pgsqlcustom:acrdemo
 
 
-docker build . -t akddemoacr.azurecr.io/pgsqlcustom
 
 
 az acr login --name akddemoacr
+docker build . -t akddemoacr.azurecr.io/pgsqlcustom
 
 docker push akddemoacr.azurecr.io/pgsqlcustom
+
+
+docker build . -t akddemoacr.azurecr.io/k8s-crud-app
+
+docker push akddemoacr.azurecr.io/k8s-crud-app
 
 az container create --resource-group acr-demo-rg  --file container-db.yml
 
