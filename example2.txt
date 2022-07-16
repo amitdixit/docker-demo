@@ -1,0 +1,6 @@
+Create MVC App using VS 2022 and push to docker hub
+
+
+theamitdixit/webapplication2
+
+docker run --name my-mvc-app -d -p 5000:80 -p 5001:443 theamitdixit/webapplication2

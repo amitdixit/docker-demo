@@ -1,0 +1,14 @@
+Image Layers
+
+manual docker publish
+
+we dont need build sdk since its already published
+
+docker build -t theamitdixit/demoapp .
+docker build -t demoapp .
+
+docker tag demoapp theamitdixit/demoapp:v1
+
+docker push theamitdixit/demoapp:v1
+
+docker build -t theamitdixit/my-app:latest -t heamitdixit/my-app:v2.1 .

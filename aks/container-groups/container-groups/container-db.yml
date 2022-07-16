@@ -1,0 +1,27 @@
+name: DbAppGroup  # Name of the container group
+apiVersion: '2021-10-01'
+location: East US
+properties: # Properties of container group
+  containers: # Array of container instances in the group
+  - name: pgdb # Name of an instance
+    properties: # Properties of an instance
+      image: akddemoacr.azurecr.io/pgsqlcustom # Container image used to create the instance
+      ports: # External-facing ports exposed on the instance, must also be set in group ipAddress property 
+      - port: 5432
+      resources: # Resource requirements of the instance
+        requests:
+          memoryInGB: 1.5
+          cpu: 1
+  osType: Linux
+  ipAddress:
+    dnsNameLabel: mypgsqlazure1
+    ip: public
+    ports:
+    - port: 5432
+      protocol: TCP
+    type: Public
+  imageRegistryCredentials: # Credentials to pull a private image
+  - server: akddemoacr.azurecr.io
+    username: akddemoacr
+    password: Rco1O/tzuuqJ6+BEA6W7rXyStqbkFEpM
+type: Microsoft.ContainerInstance/containerGroups

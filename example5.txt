@@ -1,0 +1,31 @@
+create a custom postgresql image with entry data
+
+build the custom image 
+docker build . -t theamitdixit/pgsqlcustom:acrdemo
+docker push theamitdixit/pgsqlcustom:acrdemo
+
+
+docker build . -t akddemoacr.azurecr.io/pgsqlcustom
+
+
+az acr login --name akddemoacr
+
+docker push akddemoacr.azurecr.io/pgsqlcustom
+
+az container create --resource-group acr-demo-rg  --file container-db.yml
+
+az container create --resource-group acr-demo-rg --file container-db.yml --dns-name-label ip_address public aci-demo --ports 80
+
+az container create --resource-group acr-demo-rg --name mypgcontainer --file container-db.yml --dns-name-label aci-demo --ports 80
+
+az container create --resource-group myResourceGroup --name mycontainer --image mcr.microsoft.com/azuredocs/aci-helloworld --dns-name-label aci-demo --ports 80
+
+
+psql -d myappdb -U postgres
+run the image
+
+docker run -d -p 5432:5432 --name appsql theamitdixit/pgsqlcustom
+
+docker tag theamitdixit/pgsqlcustom pgsqlcustom:acrdemo
+
+docker push theamitdixit/pgsqlcustom:acrdemo

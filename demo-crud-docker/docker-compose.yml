@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  docker-crud-app:
+    image: docker-crud-app:latest
+    depends_on:
+      - "postgres_image"
+    build:
+      context: .
+      dockerfile: WebApp.Dockerfile
+    ports:
+      - "5000:80"     
+    environment:
+      DB_CONNECTION_STRING: "Server=postgres_image;Port=5432;Database=StudentDemoContext;User Id=postgres;Password=MyPgPassword@0;Pooling=true;ApplicationName=StudentDemo"
+    networks:
+      - docker-crud-app-prod  
+  
+  postgres_image:
+    image: postgres:latest
+    ports:
+      - "5432"
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+      # - ./dbscripts/seed.sql :/docker-entrypoint-initdb.d/seed.sql
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "MyPgPassword@0"
+      POSTGRES_DB: "StudentDemoContext"
+    networks:
+      - docker-crud-app-prod
+
+
+networks:
+  docker-crud-app-prod:
+    driver: bridge 
+
+volumes:
+  db_volume:
